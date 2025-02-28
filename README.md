@@ -4,36 +4,25 @@ Este repositório contém o código para detectar um robô equipado com um marca
 
 ## Teoria Matemática  
 
-A reconstrução 3D a partir de imagens baseia-se no princípio da **triangulação**. Para cada câmera, a projeção de um ponto \\( \mathbf{X} \\) no espaço (em coordenadas homogêneas) é dada por:  
+A reconstrução 3D a partir de imagens baseia-se no princípio da **triangulação**. Para cada câmera, a projeção de um ponto **X** no espaço (em coordenadas homogêneas) é dada por:  
 
-\\[
-m \sim P X, \quad \text{com} \quad m = [u, v, 1]^T
-\\]
+    m ~ P * X, com m = [u, v, 1]^T  
 
-onde a matriz de projeção \\( \mathbf{P} \\) é construída a partir dos parâmetros **intrínsecos** e **extrínsecos** da câmera. Se os arquivos de calibração fornecem a pose da câmera (posição \\( \mathbf{T} \\) e orientação \\( \mathbf{R} \\) no mundo), a matriz de projeção pode ser escrita como:  
+onde a matriz de projeção **P** é construída a partir dos parâmetros **intrínsecos** e **extrínsecos** da câmera. Se os arquivos de calibração fornecem a pose da câmera (posição **T** e orientação **R** no mundo), a matriz de projeção pode ser escrita como:  
 
-\\[
-P = K 
-\begin{bmatrix} 
-R^T & -R^T T 
-\end{bmatrix}
-\\]
+    P = K * [ R^T  -R^T * T ]  
 
-Cada câmera que detecta o marcador gera as seguintes equações para as coordenadas \\( u \\) e \\( v \\):  
+Cada câmera que detecta o marcador gera as seguintes equações para as coordenadas (u) e (v):  
 
-\\[
-u \left(\mathbf{P}_{3,:} \mathbf{X}\right) - \left(\mathbf{P}_{1,:} \mathbf{X}\right) = 0
-\\]
-
-\\[
-v \left(\mathbf{P}_{3,:} \mathbf{X}\right) - \left(\mathbf{P}_{2,:} \mathbf{X}\right) = 0
-\\]
+    u * (P[3,:] * X) - (P[1,:] * X) = 0  
+    v * (P[3,:] * X) - (P[2,:] * X) = 0  
 
 Empilhando essas equações de pelo menos **duas câmeras**, obtemos um sistema linear da forma:  
 
-\\[
-A X = 0
-\\]
+    A * X = 0  
+
+A solução para **X** é obtida através da **decomposição em valores singulares (SVD)** do sistema. A solução corresponde à **última coluna da matriz V** (ou última linha de V^T), que é então convertida de **coordenadas homogêneas para cartesianas**.
+
 
 A solução para \\( \mathbf{X} \\) é obtida através da **decomposição em valores singulares (SVD)** do sistema. A solução corresponde à **última coluna da matriz** \\( \mathbf{V} \\) (ou última linha de \\( \mathbf{V}^T \\)), que é então convertida de **coordenadas homogêneas para cartesianas**.
 
