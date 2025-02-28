@@ -6,9 +6,11 @@ Este repositório contém o código para detectar um robô equipado com um marca
 
 A reconstrução 3D a partir de imagens baseia-se no princípio da triangulação. Para cada câmera, a projeção de um ponto \( \mathbf{X} \) no espaço (em coordenadas homogêneas) é dada por:
 
+$$
 \[ \mathbf{m} \sim \mathbf{P}\mathbf{X} \quad \text{com} \quad \mathbf{m} = [u, v, 1]^T \]
+$$
 
-onde a matriz de projeção \( \mathbf{P} \) é construída a partir dos parâmetros intrínsecos e extrínsecos da câmera. Se os arquivos de calibração fornecem a pose da câmera (posição \( \mathbf{T} \) e orientação \( \mathbf{R} \) no mundo), a matriz de projeção pode ser escrita como:
+onde a matriz de projeção $$\( \mathbf{P} \)$$ é construída a partir dos parâmetros intrínsecos e extrínsecos da câmera. Se os arquivos de calibração fornecem a pose da câmera $$(posição \( \mathbf{T} \)$$ e orientação $$\( \mathbf{R} \)$$ no mundo), a matriz de projeção pode ser escrita como:
 
 $$
 \[ \mathbf{P} = \mathbf{K} \begin{bmatrix} \mathbf{R}^T & -\mathbf{R}^T\mathbf{T} \end{bmatrix} \]
@@ -18,14 +20,19 @@ Cada câmera que detecta o marcador gera as seguintes equações para as coorden
 
 $$
 \[ u \left(\mathbf{P}_{3,:} \mathbf{X}\right) - \left(\mathbf{P}_{1,:} \mathbf{X}\right) = 0 \]
+$$
+
+$$
 \[ v \left(\mathbf{P}_{3,:} \mathbf{X}\right) - \left(\mathbf{P}_{2,:} \mathbf{X}\right) = 0 \]
 $$
 
 Empilhando essas equações de pelo menos duas câmeras, temos um sistema linear da forma:
 
+$$
 \[ \mathbf{A}\mathbf{X} = 0 \]
+$$
 
-A solução para \( \mathbf{X} \) é obtida através da decomposição em valores singulares (SVD) do sistema. A solução corresponde à última coluna da matriz \( \mathbf{V} \) (ou última linha de \( \mathbf{V}^T \)), que é então convertida de coordenadas homogêneas para cartesianas.
+A solução para $$\( \mathbf{X} \)$$ é obtida através da decomposição em valores singulares (SVD) do sistema. A solução corresponde à última coluna da matriz $$\( \mathbf{V} \)$$ (ou última linha de \( \mathbf{V}^T \)), que é então convertida de coordenadas homogêneas para cartesianas.
 
 ## Requisitos
 
