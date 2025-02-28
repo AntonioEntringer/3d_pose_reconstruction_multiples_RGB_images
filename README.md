@@ -39,7 +39,7 @@ A solução para \\( \mathbf{X} \\) é obtida através da **decomposição em va
 - `0.json`, `1.json`, `2.json`, `3.json`: Arquivos de calibração das 4 câmeras, contendo os parâmetros intrínsecos, extrínsecos e coeficientes de distorção.
 - `camera-00.mp4`, `camera-01.mp4`, `camera-02.mp4`, `camera-03.mp4`: Vídeos sincronizados capturados pelas 4 câmeras.
 
-![images2](images/image1.jpeg)
+![images2](images/gif.gif)
 
 ## Como Executar
 
